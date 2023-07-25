@@ -110,7 +110,7 @@ void DisplayAllProducts(List<Product> products, List<ProductType> productTypes)
     {
         Product product = products[i];
         ProductType productType = productTypes.FirstOrDefault(proType => proType.Id == product.ProductTypeId);
-        Console.WriteLine($"{i + 1}. {productType.Title} is priced at ${product.Price} {product.Name}");
+        Console.WriteLine($"{i + 1}. {product.Name} is priced at ${product.Price} ");
     }
 }
 
@@ -141,12 +141,62 @@ void DeleteProduct(List<Product> products, List<ProductType> productTypes)
 
 void AddProduct(List<Product> products, List<ProductType> productTypes)
 {
-    //    throw new NotImplementedException();
+    Console.WriteLine(@"Add a new product.
+                        What is the name of your product?");
+    string newPName = Console.ReadLine();
+
+    Console.WriteLine("What is the price of your product?");
+    string tempPrice = Console.ReadLine();
+    decimal.TryParse(tempPrice, out decimal newPrice);
+
+    Console.WriteLine("Types of Products:");
+    for (int i = 0; i < productTypes.Count; i++)
+    {
+        Console.WriteLine($"{productTypes[i].Id}. {productTypes[i].Title} ");
+    }
+    string newType = Console.ReadLine();
+    Int32.TryParse(newType, out int newTypeId);
+
+    Product newProduct = new()
+    {
+        Name = newPName,
+        Price = newPrice,
+        ProductTypeId = newTypeId
+    };
+
+    products.Add(newProduct);
 }
 
 void UpdateProduct(List<Product> products, List<ProductType> productTypes)
 {
-    //throw new NotImplementedException();
+    DisplayAllProducts(products, productTypes);
+
+    Console.WriteLine("Which product would you like to update?");
+    string userInput = Console.ReadLine();
+    Int32.TryParse(userInput, out int input);
+
+    int lastInput = input - 1;
+    var editProduct = products[lastInput];
+
+    Console.WriteLine(@"Update product.
+                        What is the new product name?");
+    string editName = Console.ReadLine();
+
+    Console.WriteLine("What is the new price of your product?");
+    string tempPrice = Console.ReadLine();
+    decimal.TryParse(tempPrice, out decimal editPrice);
+
+    Console.WriteLine("Types of Products:");
+    for (int i = 0; i < productTypes.Count; i++)
+    {
+        Console.WriteLine($"{productTypes[i].Id}. {productTypes[i].Title} ");
+    }
+    string newType = Console.ReadLine();
+    Int32.TryParse(newType, out int editTypeId);
+
+    editProduct.Name = editName;
+    editProduct.Price = editPrice;
+    editProduct.ProductTypeId = editTypeId;
 }
 
 // don't move or change this!
